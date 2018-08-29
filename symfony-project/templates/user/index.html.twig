@@ -20,11 +20,11 @@
         <tbody>
         {% for user in data %}
             <tr>
-                <td>{{ user.firstName  }}</td>
+                <td>{{ user.FirstName   }}</td>
                 <td>{{ user.lastName}}</td>
                 <td class="text-right">
                     <div class="item-actions">
-                        <a href="show/{{ user.userId}}" class="btn btn-sm btn-default">
+                        <a href="show/{{ user.id }}" class="btn btn-sm btn-default">
                             <i class="fa fa-eye" aria-hidden="true"></i> {{ 'show'|trans }}
                         </a>
 
