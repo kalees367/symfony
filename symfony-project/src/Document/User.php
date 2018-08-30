@@ -27,12 +27,12 @@ class User
     protected $lastName;
 
     /**
-     * @MongoDB\Field(type="hash")
+     * @MongoDB\Field(type="string")
      */
     protected $email;
 
     /**
-     * @MongoDB\Field(type="hash")
+     * @MongoDB\Field(type="string")
      */
 
     protected $mobile;
@@ -43,7 +43,7 @@ class User
     protected $dateofBirth;
 
     /**
-     * @MongoDB\Field(type="hash")
+     * @MongoDB\Field(type="string")
      */
     protected $education;
 
@@ -64,6 +64,10 @@ class User
 
     public function getId() {
         return $this->id;
+    }
+    public function setId($id)
+    {
+        $this->id = $id;
     }
     public function setFirstName($firstName)
     {
@@ -88,21 +92,27 @@ class User
     public function setEmail($email)
     {
         $this->email = $email;
+       //  $this->email =   explode(',', $email);
     }
 
     public function getEmail()
     {
         return $this->email;
+       // return $this->email = implode(",",$this->email) ;
     }
 
     public function setMobile($mobile)
     {
         $this->mobile = $mobile;
+       // $this->mobile =   explode(',', $mobile);
+        
+    
     }
 
     public function getMobile()
     {
         return $this->mobile;
+       // return $this->mobile = implode(",",$this->mobile) ;
     }
 
     public function setDateofBirth($dateofBirth)
@@ -118,11 +128,13 @@ class User
     public function setEducation($education)
     {
         $this->education = $education;
+        // $this->education =   explode(',', $education);
     }
 
     public function getEducation()
     {
         return $this->education;
+       // return $this->education = implode(",",$this->education) ;
     }
 
     public function setBloodGroup($bloodGroup)

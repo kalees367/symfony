@@ -3,6 +3,61 @@
 {% block title %}My cool blog posts{% endblock %}
 
 {% block body %}
-	<h1>edit the user</h1>
-   <h1>Your lucky number is {{ number }}</h1>
+<h1>Edit Users </h1>
+<table class="table table-striped table-middle-aligned">
+        <thead>
+        </thead>
+        <tbody>
+      {{ form_start(form) }}
+            <tr>
+                <td>{{ form_label(form.firstName) }}</td>
+                <td>{{ form_widget(form.firstName) }}</td>
+                
+            </tr>
+			<tr>
+                <td>{{ form_label(form.lastName) }}</td>
+                <td>{{ form_widget(form.lastName) }}</td>
+                
+            </tr>
+			<tr>
+                <td>{{ form_label(form.email) }}</td>
+                <td> {{ form_widget(form.email) }}
+                </td>
+                
+            </tr>
+			<tr>
+                <td>{{ form_label(form.mobile) }} </td>
+                <td> {{form_widget(form.mobile)}}
+                </td>
+                
+            </tr>
+			<tr>
+                <td> {{ form_label(form.dateofBirth) }} </td>
+                <td>{{ form_widget(form.dateofBirth) }}</td>
+                
+            </tr>
+			<tr>
+                <td> {{ form_label(form.education) }} </td>
+                <td> {{ form_widget(form.education )}}
+               </td>
+                
+            </tr>
+			<tr>
+                <td> {{ form_label(form.bloodGroup) }} </td>
+                <td>{{   form_widget(form.bloodGroup) }}</td>
+                
+            </tr>
+			<tr>
+                <td> {{ form_label(form.gender) }} </td>
+                <td>{{ form_widget(form.gender) }}</td>
+                
+            </tr>
+			<tr>
+                <td>  </td>
+                <td>{{ form_widget(form.save) }}</td>
+                
+            </tr>
+            {{ form_end(form) }}
+        </tbody>
+    </table>
 {% endblock %}

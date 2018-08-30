@@ -14,6 +14,8 @@
             <tr>
                 <th scope="col">{{ 'First Name'|trans }}</th>
                 <th scope="col"> {{ 'Last name'|trans }}</th>
+                <th scope="col"> {{ 'Email'|trans }}</th>
+                <th scope="col"> {{ 'Mobile'|trans }}</th>
                 <th scope="col" class="text-right"><i class="fa fa-cogs" aria-hidden="true"></i> {{ 'actions'|trans }}</th>
             </tr>
         </thead>
@@ -22,14 +24,19 @@
             <tr>
                 <td>{{ user.FirstName   }}</td>
                 <td>{{ user.lastName}}</td>
+                <td>{{ user.email}}</td>
+                 <td>{{ user.mobile}}</td>
                 <td class="text-right">
                     <div class="item-actions">
                         <a href="show/{{ user.id }}" class="btn btn-sm btn-default">
                             <i class="fa fa-eye" aria-hidden="true"></i> {{ 'show'|trans }}
                         </a>
 
-                        <a href="" class="btn btn-sm btn-primary">
+                        <a href="edit/{{ user.id }}" class="btn btn-sm btn-primary">
                             <i class="fa fa-edit" aria-hidden="true"></i> {{ 'edit'|trans }}
+                        </a>
+                        <a href="delete/{{ user.id }}" class="btn btn-sm btn-danger">
+                            <i class="fa fa-edit" aria-hidden="true"></i> {{ 'delete'|trans }}
                         </a>
                     </div>
                 </td>

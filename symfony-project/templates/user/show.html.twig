@@ -29,18 +29,15 @@
 			<tr>
                 <td>Email Id</td>
                 <td>
-                {% for email in user.email %}
-                {{ email }} <br/>
-                {% endfor %}
+                {{ user.email }}
                 </td>
                 
             </tr>
 			<tr>
                 <td> Mobile </td>
                 <td>
-                 {% for mobile in user.mobile %}
-                {{ mobile }} ,
-                {% endfor %}
+                {{ user.mobile }}
+                
                 </td>
                 
             </tr>
@@ -52,9 +49,8 @@
 			<tr>
                 <td> Education </td>
                 <td>
-                {% for education in user.education %}
-                {{ education }} ,
-                {% endfor %}
+                {{ user.education }}
+              
                </td>
                 
             </tr>
