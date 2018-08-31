@@ -24,8 +24,16 @@
             <tr>
                 <td>{{ user.FirstName   }}</td>
                 <td>{{ user.lastName}}</td>
-                <td>{{ user.email}}</td>
-                 <td>{{ user.mobile}}</td>
+                <td>
+                    {% for email in user.email %}
+                    {{ email}} <br/>
+                    {% endfor %}
+                </td>
+                 <td>
+                 {% for mobile in user.mobile %}
+                    {{ mobile }} </br/>
+                     {% endfor %}
+                 </td>
                 <td class="text-right">
                     <div class="item-actions">
                         <a href="show/{{ user.id }}" class="btn btn-sm btn-default">
@@ -48,5 +56,7 @@
         {% endfor %}
         </tbody>
     </table>
+
+  
    
 {% endblock %}

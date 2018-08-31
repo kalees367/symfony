@@ -30,6 +30,17 @@ class UserController extends Controller
         return $this->render('user/index.html.twig', [
             'data'=> $users
         ]); 
+     
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $db->getRepository(User::class)->findAll(), //query
+            $db->query->getInt('page', 1), //page
+            2 //limit per page
+        );
+        return $this->render('user/index.html.twig', array(
+            "data" => $pagination,
+            "pagination" => $pagination
+        ));
 
     }
 	/**
@@ -84,33 +95,47 @@ class UserController extends Controller
     /**
     * @Route("/user/edit/{slug}")
     */
-    public function edit($slug,Request $request)
+    public function edit($slug)
     {
-        $number = random_int(0, 100);
+      
         $user = new User();
         $db = $this->get('doctrine_mongodb')->getManager();
         $repository = $db->getRepository(User::class);
-        $user = $repository->find(['id' => $slug]);        
-        $db->flush(); 
-    
-       $form = $this->createFormBuilder($user)
-        ->setAction('edit')
-        ->setMethod('GET')
-        ->add('id', HiddenType::class, array(
-            'data' => $slug,
-        ))
-        ->add('firstName', TextType::class)
-        ->add('lastName', TextType::class)
-        ->add('email', TextType::class)
-        ->add('mobile', TextType::class)
-        ->add('dateofBirth', TextType::class)
-        ->add('education', TextareaType::class)
-        ->add('bloodGroup', TextType::class)
-        ->add('gender', TextType::class)
-        ->add('save', SubmitType::class, array('label' => 'Update User'))
-        ->getForm();
-        $form->handleRequest($request);
-        
+            $user = $repository->find(['id' => $slug]);        
+         //   $db->flush(); 
+        //  print_r($user);
+        //  exit;
+
+            $user_emails = implode(",",$user->getEmail());
+            $user_mobiles = implode(",",$user->getMobile());
+            $user_educations = implode(",",$user->getEducation());
+             $form = $this->createFormBuilder($user)
+            ->setAction('/user/update')
+            ->setMethod('POST')
+            ->add('id', HiddenType::class, array(
+                'data' => $slug,
+            ))
+            ->add('firstName', TextType::class)
+            ->add('lastName', TextType::class)
+            ->add('email', TextType::class, array( 'data' => $user_emails))
+            ->add('mobile', TextType::class, array( 'data' => $user_mobiles))
+            ->add('dateofBirth', TextType::class)
+            ->add('education', TextareaType::class, array( 'data' => $user_educations))
+            ->add('bloodGroup', TextType::class)
+            ->add('gender', TextType::class)
+            ->add('save', SubmitType::class, array('label' => 'Update User'))
+            ->getForm();
+           
+            return $this->render('user/edit.html.twig', array(
+                'form' => $form->createView(),
+            ));
+    }
+
+    /**
+    * @Route("/user/update")
+    */
+    public function update(Request $request)
+    {
         if ($form->isSubmitted() && $form->isValid()) { 
             $data = $form->getData();
             $db = $this->get('doctrine_mongodb')->getManager();
@@ -124,17 +149,9 @@ class UserController extends Controller
             $user->setEducation($data['education']);
             $user->setBloodGroup($data['bloodGroup']);
             $user->setGender($data['gender']);
-           
-            // $dm->flush();
-           // $db->persist($user);
             $db->flush();
             return $this->redirectToRoute('list');
          }
-
-        return $this->render('user/edit.html.twig', array(
-            'form' => $form->createView(),
-        ));
-
     }
 
     /**

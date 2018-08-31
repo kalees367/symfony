@@ -27,12 +27,12 @@ class User
     protected $lastName;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @MongoDB\Field(type="hash")
      */
     protected $email;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @MongoDB\Field(type="hash")
      */
 
     protected $mobile;
@@ -43,7 +43,7 @@ class User
     protected $dateofBirth;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @MongoDB\Field(type="hash")
      */
     protected $education;
 
@@ -91,20 +91,20 @@ class User
     
     public function setEmail($email)
     {
-        $this->email = $email;
-       //  $this->email =   explode(',', $email);
+       // $this->email = $email;
+         $this->email =   explode(',', $email);
     }
 
     public function getEmail()
     {
-        return $this->email;
+         return $this->email;
        // return $this->email = implode(",",$this->email) ;
     }
 
     public function setMobile($mobile)
     {
-        $this->mobile = $mobile;
-       // $this->mobile =   explode(',', $mobile);
+       // $this->mobile = $mobile;
+        $this->mobile =   explode(',', $mobile);
         
     
     }
@@ -112,7 +112,7 @@ class User
     public function getMobile()
     {
         return $this->mobile;
-       // return $this->mobile = implode(",",$this->mobile) ;
+        // return $this->mobile = implode(",",$this->mobile) ;
     }
 
     public function setDateofBirth($dateofBirth)
@@ -127,8 +127,8 @@ class User
 
     public function setEducation($education)
     {
-        $this->education = $education;
-        // $this->education =   explode(',', $education);
+       // $this->education = $education;
+         $this->education =   explode(',', $education);
     }
 
     public function getEducation()
