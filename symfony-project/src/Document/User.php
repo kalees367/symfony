@@ -38,7 +38,7 @@ class User
     protected $mobile;
 
     /**
-     * @MongoDB\Field(type="string")
+     * @MongoDB\Field(type="date")
      */
     protected $dateofBirth;
 
@@ -112,7 +112,6 @@ class User
     public function getMobile()
     {
         return $this->mobile;
-        // return $this->mobile = implode(",",$this->mobile) ;
     }
 
     public function setDateofBirth($dateofBirth)
@@ -122,7 +121,11 @@ class User
 
     public function getDateofBirth()
     {
-        return $this->dateofBirth;
+       return $this->dateofBirth;
+    }
+    public function getDateofBirthObject()
+    {
+       return $this->dateofBirth;
     }
 
     public function setEducation($education)

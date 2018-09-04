@@ -57,6 +57,14 @@
         </tbody>
     </table>
 
-  
+  <div class="navigation">
+                       {{ knp_pagination_render(data, null, {}, {
+                            'align' : 'center',
+                            'position': 'centered',
+                            'size': 'large',
+                            'rounded': true
+                            })
+                        }}
+                    </div>
    
 {% endblock %}
