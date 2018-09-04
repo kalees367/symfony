@@ -12,6 +12,7 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 
 class UserForm extends AbstractType
 {
@@ -22,8 +23,15 @@ class UserForm extends AbstractType
         ->setMethod('GET')
         ->add('firstName', TextType::class)
         ->add('lastName', TextType::class)
-        ->add('email', TextType::class)
-        ->add('mobile', TextType::class)
+        ->add('email', CollectionType::class, array(
+            // each entry in the array will be an "email" field
+            'entry_type' => EmailType::class,
+            // these options are passed to each "email" type
+            'entry_options' => array(
+                'attr' => array('class' => 'email-box','id' =>'form_email_0')),
+            'allow_add' =>true,
+         ))
+        ->add('mobile', TelType::class)
         ->add('dateofBirth', DateType::class, array(
             'widget' => 'single_text',
             // this is actually the default format for single_text

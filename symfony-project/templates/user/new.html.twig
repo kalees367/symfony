@@ -21,7 +21,16 @@
             </tr>
 			<tr>
                 <td>{{ form_label(form.email) }}</td>
-                <td> {{ form_widget(form.email) }}
+                <td> 
+                <ul>
+                    {% for emailField in form.email %}
+                     <li>
+                        {{ form_errors(emailField) }}
+                        {{ form_widget(emailField) }}
+                    </li>
+                    {% endfor %}
+                </ul>
+                <button type="button" class="add-another-collection-widget" data-list="#email-fields-list">Add another email</button>
                 </td>
                 
             </tr>
@@ -58,6 +67,8 @@
                 
             </tr>
             {{ form_end(form) }}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="{{ asset('build/js/add-collection-widget.js') }} "></script>
         </tbody>
     </table>
 {% endblock %}
