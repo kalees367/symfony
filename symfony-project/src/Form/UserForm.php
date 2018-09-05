@@ -1,7 +1,7 @@
 <?php
 // src/Form/UserForm.php
 namespace App\Form;
-
+use App\Document\User; 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -13,14 +13,14 @@ use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
-
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 class UserForm extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
         ->setAction('new')
-        ->setMethod('GET')
+        ->setMethod('POST')
         ->add('firstName', TextType::class)
         ->add('lastName', TextType::class)
         ->add('email', CollectionType::class, array(
@@ -28,8 +28,9 @@ class UserForm extends AbstractType
             'entry_type' => EmailType::class,
             // these options are passed to each "email" type
             'entry_options' => array(
-                'attr' => array('class' => 'email-box','id' =>'form_email_0')),
+                ),
             'allow_add' =>true,
+            'prototype' => true,
          ))
         ->add('mobile', TelType::class)
         ->add('dateofBirth', DateType::class, array(
@@ -43,5 +44,7 @@ class UserForm extends AbstractType
         ->add('save', SubmitType::class, array('label' => 'Add User'))
         ;
     }
+   
+  
 }
 ?>

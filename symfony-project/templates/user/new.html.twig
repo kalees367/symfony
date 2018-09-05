@@ -22,7 +22,8 @@
 			<tr>
                 <td>{{ form_label(form.email) }}</td>
                 <td> 
-                <ul>
+               <ul class="tags" data-prototype="&lt;div&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;input type=&quot;email&quot; id=&quot;form_email___name__&quot; name=&quot;email[__name__]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
+
                     {% for emailField in form.email %}
                      <li>
                         {{ form_errors(emailField) }}
@@ -30,7 +31,7 @@
                     </li>
                     {% endfor %}
                 </ul>
-                <button type="button" class="add-another-collection-widget" data-list="#email-fields-list">Add another email</button>
+               
                 </td>
                 
             </tr>

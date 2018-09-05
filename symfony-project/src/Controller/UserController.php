@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 class UserController extends Controller
@@ -58,12 +59,23 @@ class UserController extends Controller
     */
     public function new(Request $request)
     {
+        //$request = $this->get('request');
+        //print_r($request);
         $user = new User();
         $form = $this->createForm(UserForm::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) { 
             $user = $form->getData();
+           var_dump($request);
+           
+          // exit;
+           // $data = $form->getData();
+          //  $user1 = $form->getData();
+            $username = $request->request->get('email');
+            print_r($username);
+            exit;
+            $user->setEmail($username);
             $db = $this->get('doctrine_mongodb')->getManager();
             $db->persist($user);
             $db->flush();

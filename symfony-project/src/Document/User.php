@@ -4,7 +4,7 @@ namespace App\Document;
 
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * @MongoDB\Document
  */
@@ -62,6 +62,11 @@ class User
      */
     protected $created_date;
 
+   /* public function __construct()
+    {
+        $this->email = new ArrayCollection();
+    } */
+
     public function getId() {
         return $this->id;
     }
@@ -91,8 +96,8 @@ class User
     
     public function setEmail($email)
     {
-       // $this->email = $email;
-         $this->email =   explode(',', $email);
+        $this->email = $email;
+       //  $this->email =   explode(',', $email);
     }
 
     public function getEmail()
