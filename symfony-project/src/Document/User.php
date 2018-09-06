@@ -1,14 +1,18 @@
 <?php
-
 namespace App\Document;
-
+use App\Form\UserForm;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityRepository;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\FormTypeInterface;
 /**
  * @MongoDB\Document
  */
-class User
+class User 
 {
     /**
      * @MongoDB\Id
@@ -29,13 +33,13 @@ class User
     /**
      * @MongoDB\Field(type="hash")
      */
-    protected $email;
+    protected $email=array();
 
     /**
      * @MongoDB\Field(type="hash")
      */
 
-    protected $mobile;
+    protected $mobile=array();
 
     /**
      * @MongoDB\Field(type="date")
@@ -45,7 +49,7 @@ class User
     /**
      * @MongoDB\Field(type="hash")
      */
-    protected $education;
+    protected $education=array();
 
     /**
      * @MongoDB\Field(type="string")
@@ -108,10 +112,8 @@ class User
 
     public function setMobile($mobile)
     {
-       // $this->mobile = $mobile;
-        $this->mobile =   explode(',', $mobile);
-        
-    
+        $this->mobile = $mobile;
+       // $this->mobile =   explode(',', $mobile);
     }
 
     public function getMobile()
@@ -135,8 +137,8 @@ class User
 
     public function setEducation($education)
     {
-       // $this->education = $education;
-         $this->education =   explode(',', $education);
+        $this->education = $education;
+       //  $this->education =   explode(',', $education);
     }
 
     public function getEducation()

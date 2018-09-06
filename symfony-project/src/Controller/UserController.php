@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use FOS\RestBundle\Controller\FOSRestController;
+
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -17,6 +20,11 @@ use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+
+use FOS\RestBundle\View\View;
+use FOS\RestBundle\Controller\Annotations as FOSRest;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Doctrine\ODM\MongoDB\DocumentManager;
 
 class UserController extends Controller
 {
@@ -31,7 +39,7 @@ class UserController extends Controller
         $pagination = $paginator->paginate(
             $db->getRepository(User::class)->findAll(), //query
             $request->query->getInt('page', 1), //page
-            3 //limit per page
+            5 //limit per page
         );
         return $this->render('user/index.html.twig', array(
             "data" => $pagination
@@ -59,23 +67,12 @@ class UserController extends Controller
     */
     public function new(Request $request)
     {
-        //$request = $this->get('request');
-        //print_r($request);
+       
         $user = new User();
         $form = $this->createForm(UserForm::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) { 
-            $user = $form->getData();
-           var_dump($request);
-           
-          // exit;
-           // $data = $form->getData();
-          //  $user1 = $form->getData();
-            $username = $request->request->get('email');
-            print_r($username);
-            exit;
-            $user->setEmail($username);
             $db = $this->get('doctrine_mongodb')->getManager();
             $db->persist($user);
             $db->flush();
@@ -91,7 +88,22 @@ class UserController extends Controller
     */
     public function edit($slug=NULL,Request $request)
     {
-      
+        
+        $user = new User();
+        $db = $this->get('doctrine_mongodb')->getManager();
+        $repository = $db->getRepository(User::class);
+        $userDetail = $repository->find(['id' => $slug]);
+        print_r($userDetail);
+        exit;
+        $form = $this->createForm(UserForm::class, $userDetail[0]);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) { 
+            $dm->flush();
+        }
+        return $this->render('user/new.html.twig', array(
+            'form' => $form->createView(),
+        )); 
+        /*
         $user = new User();
         $db = $this->get('doctrine_mongodb')->getManager();
         $repository = $db->getRepository(User::class);
@@ -132,7 +144,8 @@ class UserController extends Controller
                     'form' => $form->createView(),
                 ));
                
-            }
+            } */
+            
     }
 
     /**

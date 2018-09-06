@@ -1,75 +1,94 @@
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
 
-{% block title %}My cool blog posts{% endblock %}
-
-{% block body %}
-<h1>Add new users</h1>
-<table class="table table-striped table-middle-aligned">
-        <thead>
-        </thead>
-        <tbody>
-      {{ form_start(form) }}
-            <tr>
-                <td>{{ form_label(form.firstName) }}</td>
-                <td>{{ form_widget(form.firstName) }}</td>
-                
-            </tr>
-			<tr>
-                <td>{{ form_label(form.lastName) }}</td>
-                <td>{{ form_widget(form.lastName) }}</td>
-                
-            </tr>
-			<tr>
-                <td>{{ form_label(form.email) }}</td>
-                <td> 
-               <ul class="tags" data-prototype="&lt;div&gt;&lt;div id=&quot;task_tags___name__&quot;&gt;&lt;div&gt;&lt;input type=&quot;email&quot; id=&quot;form_email___name__&quot; name=&quot;email[__name__]&quot; required=&quot;required&quot; maxlength=&quot;255&quot; /&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;">
-
+        {% block stylesheets %}
+		 
+		{% endblock %}
+    </head>
+    <body>
+      <div class="container">
+            <div class="row">
+                {{ form_start(form) }}
+                <div style="clear:both; padding-top:25px;"> 
+                {{ form_row(form.firstName) }}
+                </div>
+                <div style="clear:both; padding-top:25px;"> 
+                {{ form_row(form.lastName) }}
+                </div>
+                <div style="clear:both; padding-top:25px;"> 
+                {{ form_label(form.email) }}
+                     <ul id="email-fields-list"
+                        data-prototype="{{ form_widget(form.email.vars.prototype)|e }}"
+                        data-widget-tags="{{ '<li></li>'|e }}">
                     {% for emailField in form.email %}
-                     <li>
-                        {{ form_errors(emailField) }}
-                        {{ form_widget(emailField) }}
-                    </li>
+                        <li>
+                           
+                            {{ form_widget(emailField) }}
+                        </li>
                     {% endfor %}
-                </ul>
-               
-                </td>
-                
-            </tr>
-			<tr>
-                <td>{{ form_label(form.mobile) }} </td>
-                <td> {{form_widget(form.mobile)}}
-                </td>
-                
-            </tr>
-			<tr>
-                <td> {{ form_label(form.dateofBirth) }} </td>
-                <td>{{ form_widget(form.dateofBirth) }}</td>
-                
-            </tr>
-			<tr>
-                <td> {{ form_label(form.education) }} </td>
-                <td> {{ form_widget(form.education )}}
-               </td>
-                
-            </tr>
-			<tr>
-                <td> {{ form_label(form.bloodGroup) }} </td>
-                <td>{{   form_widget(form.bloodGroup) }}</td>
-                
-            </tr>
-			<tr>
-                <td> {{ form_label(form.gender) }} </td>
-                <td>{{ form_widget(form.gender) }}</td>
-                
-            </tr>
-			<tr>
-                <td>  </td>
-                <td>{{ form_widget(form.save) }}</td>
-                
-            </tr>
-            {{ form_end(form) }}
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-            <script src="{{ asset('build/js/add-collection-widget.js') }} "></script>
-        </tbody>
-    </table>
+                    </ul>
+                    <button type="button"
+                        class="add-another-collection-widget"
+                        data-list="#email-fields-list">Add Email Id</button>
+                </div>                        
+                <div style="clear:both; padding-top:25px;">        
+                  {{ form_label(form.mobile) }}
+                     <ul id="mobile-fields-list"
+                        data-prototype="{{ form_widget(form.mobile.vars.prototype)|e }}"
+                        data-widget-tags="{{ '<li></li>'|e }}">
+                    {% for mobileField in form.mobile %}
+                        <li>
+                            {{ form_widget(mobileField) }}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                    <button type="button"
+                        class="add-another-collection-widget"
+                        data-list="#mobile-fields-list">Add Mobile</button>
+               </div>
+               <div style="clear:both; padding-top:25px;"> 
+                     {{ form_label(form.education) }}
+                     <ul id="education-fields-list"
+                        data-prototype="{{ form_widget(form.education.vars.prototype)|e }}"
+                        data-widget-tags="{{ '<li></li>'|e }}">
+                    {% for educationField in form.education %}
+                        <li>
+                            {{ form_widget(educationField) }}
+                        </li>
+                    {% endfor %}
+                    </ul>
+                    <button type="button"
+                        class="add-another-collection-widget"
+                        data-list="#education-fields-list">Add Education</button>
+               </div>
+
+               <div style="clear:both; padding-top:25px;"> 
+                    {{ form_row(form.dateofBirth) }}
+               </div>
+
+               <div style="clear:both; padding-top:25px;">  
+                    {{ form_row(form.bloodGroup) }}
+               </div>
+
+               <div style="clear:both; padding-top:25px;"> 
+                    {{ form_row(form.gender) }}
+               </div>
+
+              <div style="clear:both; padding-top:25px;"> 
+                    <button type="submit">Save User</button>
+              </div>
+
+             
+            </div>
+        </div>
+         
+    </body>
+     {{ form_end(form) }}
+</html>
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{ asset('build/js/add-collection-widget.js') }}"></script>
 {% endblock %}
