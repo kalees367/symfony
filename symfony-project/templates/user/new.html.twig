@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+{% extends 'base.html.twig' %}
 
-        {% block stylesheets %}
-		 
-		{% endblock %}
-    </head>
-    <body>
-      <div class="container">
+{% block title %}My cool blog posts{% endblock %}
+
+{% block body %}
+    <div class="container">
             <div class="row">
                 {{ form_start(form) }}
                 <div style="clear:both; padding-top:25px;"> 
@@ -35,7 +29,7 @@
                         data-list="#email-fields-list">Add Email Id</button>
                 </div>                        
                 <div style="clear:both; padding-top:25px;">        
-                  {{ form_label(form.mobile) }}
+                {{ form_label(form.mobile) }}
                      <ul id="mobile-fields-list"
                         data-prototype="{{ form_widget(form.mobile.vars.prototype)|e }}"
                         data-widget-tags="{{ '<li></li>'|e }}">
@@ -50,7 +44,7 @@
                         data-list="#mobile-fields-list">Add Mobile</button>
                </div>
                <div style="clear:both; padding-top:25px;"> 
-                     {{ form_label(form.education) }}
+                    {{ form_label(form.education) }}
                      <ul id="education-fields-list"
                         data-prototype="{{ form_widget(form.education.vars.prototype)|e }}"
                         data-widget-tags="{{ '<li></li>'|e }}">
@@ -84,11 +78,13 @@
              
             </div>
         </div>
-         
-    </body>
-     {{ form_end(form) }}
-</html>
-{% block javascripts %}
+        <div style="display:none;">
+          {{ form_end(form) }}
+          </div>
+            <div style="margin-bottom:100px;"></div>
+    {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="{{ asset('build/js/add-collection-widget.js') }}"></script>
+    {% endblock %}
+
 {% endblock %}

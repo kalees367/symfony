@@ -24,16 +24,15 @@ class UserForm extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-        ->setAction('new')
         ->setMethod('POST')
-        ->add('firstName', TextType::class,array("label"=>'First Name','attr' => array('class' => 'txtClass')))
-        ->add('lastName', TextType::class)
+        ->add('firstName', TextType::class,array("label"=>'First Name','attr' => array('class' => 'form-control')))
+        ->add('lastName', TextType::class,array("label"=>'Last Name','attr' => array('class' => 'form-control')))
         ->add('email', CollectionType::class, array(
             // each entry in the array will be an "email" field
             'entry_type' => EmailType::class,
             // these options are passed to each "email" type
             'entry_options' => array(
-                'attr' => array('class' => 'email-box txtClass'),
+                'attr' => array('class' => 'email-box form-control'),
             ),
             'allow_add' =>true,
             'prototype' => true,
@@ -43,7 +42,7 @@ class UserForm extends AbstractType
             'entry_type' => TelType::class,
             // these options are passed to each "email" type
             'entry_options' => array(
-                'attr' => array('class' => 'email-box txtClass'),
+                'attr' => array('class' => 'form-control'),
             ),
             'allow_add' =>true,
             'prototype' => true,
@@ -52,17 +51,23 @@ class UserForm extends AbstractType
             'widget' => 'single_text',
             // this is actually the default format for single_text
             'format' => 'yyyy-MM-dd',
+            'attr' => array('class' => 'form-control')
         ))
         ->add('education', CollectionType::class, array(
             'entry_type' => TextType::class,
             'entry_options' => array(
-                'attr' => array(),
+                'attr' => array('class' => 'form-control'),
             ),
             'allow_add' =>true,
             'prototype' => true,
          ))
-        ->add('bloodGroup', TextType::class)
-        ->add('gender', TextType::class)
+        ->add('bloodGroup', TextType::class,array("label"=>'Blood Group','attr' => array('class' => 'form-control')))
+        ->add('gender', ChoiceType::class, array("label"=>'Gender',
+                                                         'attr' => array('class' => 'form-control'),
+                                                        'choices'  => array(
+                                                            'Male' => 'Male',
+                                                            'Female' => 'Female'
+                                                        )));
         ;
     }
    

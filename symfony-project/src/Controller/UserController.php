@@ -67,7 +67,7 @@ class UserController extends Controller
     */
     public function new(Request $request)
     {
-       
+      
         $user = new User();
         $form = $this->createForm(UserForm::class, $user);
         $form->handleRequest($request);
@@ -86,66 +86,26 @@ class UserController extends Controller
     /**
     * @Route("/user/edit/{slug}")
     */
-    public function edit($slug=NULL,Request $request)
+    public function edit($slug,Request $request)
     {
         
         $user = new User();
         $db = $this->get('doctrine_mongodb')->getManager();
         $repository = $db->getRepository(User::class);
         $userDetail = $repository->find(['id' => $slug]);
-        print_r($userDetail);
-        exit;
-        $form = $this->createForm(UserForm::class, $userDetail[0]);
+        //print_r($userDetail);
+        //exit;
+        $form = $this->createForm(UserForm::class, $userDetail);
         $form->handleRequest($request);
         if ($form->isSubmitted()) { 
-            $dm->flush();
+
+            $db->flush();
+            return $this->redirectToRoute('list');
         }
         return $this->render('user/new.html.twig', array(
             'form' => $form->createView(),
         )); 
-        /*
-        $user = new User();
-        $db = $this->get('doctrine_mongodb')->getManager();
-        $repository = $db->getRepository(User::class);
-            $user = $repository->find(['id' => $slug]);        
-            if($slug!=NULL){
-                $user_emails = implode(",",$user->getEmail());
-                $user_mobiles = implode(",",$user->getMobile());
-                $user_educations = implode(",",$user->getEducation());
-                $form = $this->createFormBuilder($user)
-                //->setAction('/user/update')
-                ->setMethod('POST')
-                ->add('id', HiddenType::class, array(
-                    'data' => $slug,
-                ))
-                ->add('firstName', TextType::class)
-                ->add('lastName', TextType::class)
-                ->add('email', TextType::class, array( 'data' => $user_emails))
-                ->add('mobile', TextType::class, array( 'data' => $user_mobiles))
-                ->add('dateofBirth', DateType::class, array(
-                    'widget' => 'single_text',
-                    // this is actually the default format for single_text
-                    'format' => 'yyyy-MM-dd','data'=> new \DateTime($user->getDateofBirthObject()->format('Y-m-d H:i:s')),
-                ))
-                ->add('education', TextareaType::class, array( 'data' => $user_educations))
-                ->add('bloodGroup', TextType::class)
-                ->add('gender', TextType::class)
-                ->add('save', SubmitType::class, array('label' => 'Update User'))
-                ->getForm();
-                $form->handleRequest($request);
-                if ($form->isSubmitted() && $form->isValid()) { 
-                    $data = $form->getData();
-                    $db = $this->get('doctrine_mongodb')->getManager();
-                    $repository = $db->getRepository(User::class)->find($data->getId());
-                    $db->flush();
-                    return $this->redirectToRoute('list');
-                }
-                return $this->render('user/edit.html.twig', array(
-                    'form' => $form->createView(),
-                ));
-               
-            } */
-            
+       
     }
 
     /**
